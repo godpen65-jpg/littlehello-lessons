@@ -1,23 +1,39 @@
 <meta charset="UTF-8">
-<title>리틀헬로 레슨 모음</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🐰 리틀헬로 레슨 모음</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  body { font-family: -apple-system, "Malgun Gothic", sans-serif; max-width: 640px; margin: 0 auto; padding: 20px 16px 60px; background: #fffdf0; color: #333; }
-  h1 { font-size: 22px; margin-bottom: 4px; }
-  p.sub { color: #888; font-size: 14px; margin-top: 0; margin-bottom: 20px; }
-  .card { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); display: flex; flex-direction: column; gap: 8px; }
-  .card.done { opacity: 0.55; }
+  * { box-sizing: border-box; }
+  body { font-family: 'Gaegu', sans-serif; max-width: 640px; margin: 0 auto; padding: 24px 16px 60px; background: #fffbe9; color: #4a3f2a; }
+  h1 { font-size: 30px; margin-bottom: 2px; }
+  p.sub { color: #a3936a; font-size: 15px; margin-top: 0; margin-bottom: 22px; }
+  .card {
+    background: #fffef7;
+    border: 2.5px dashed #f0d888;
+    border-radius: 18px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    box-shadow: 3px 4px 0 #f6e6b0;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .card:nth-child(3n+1) { border-color: #f0d888; box-shadow: 3px 4px 0 #f6e6b0; }
+  .card:nth-child(3n+2) { border-color: #f7cf9f; box-shadow: 3px 4px 0 #fbe4c8; }
+  .card:nth-child(3n) { border-color: #cfe3b0; box-shadow: 3px 4px 0 #e3f0cf; }
+  .card.done { opacity: 0.5; }
   .row1 { display: flex; align-items: center; gap: 10px; }
-  .num { font-weight: bold; color: #c9a400; font-size: 13px; min-width: 34px; }
-  .title { flex: 1; font-size: 15px; font-weight: 600; }
-  .go { background: #f5d76e; color: #6b5400; border: none; border-radius: 8px; padding: 6px 12px; font-size: 13px; text-decoration: none; white-space: nowrap; font-weight: 600; }
-  .done .go { background: #eee; color: #999; }
+  .num { font-weight: bold; color: #d9a441; font-size: 17px; min-width: 42px; }
+  .title { flex: 1; font-size: 18px; font-weight: 700; }
+  .go { background: #ffe9a8; color: #7a5c1e; border: 2px solid #f0d27a; border-radius: 999px; padding: 6px 14px; font-size: 14px; text-decoration: none; white-space: nowrap; font-weight: 700; }
+  .done .go { background: #f0f0f0; color: #aaa; border-color: #ddd; }
   memo { display: block; }
-  textarea { width: 100%; box-sizing: border-box; border: 1px solid #eee; border-radius: 8px; padding: 6px 8px; font-size: 13px; font-family: inherit; resize: vertical; min-height: 32px; background: #fafafa; }
-  .chk-label { font-size: 13px; color: #666; display: flex; align-items: center; gap: 4px; }
+  textarea { width: 100%; border: 2px dashed #eadfc0; border-radius: 12px; padding: 8px 10px; font-size: 15px; font-family: 'Gaegu', sans-serif; resize: vertical; min-height: 34px; background: #fffef9; }
+  .chk-label { font-size: 15px; color: #8a7a55; display: flex; align-items: center; gap: 6px; }
+  input[type="checkbox"] { width: 18px; height: 18px; accent-color: #e8b64a; }
 </style>
 <body>
-  <h1>리틀헬로 레슨 모음</h1>
-  <p class="sub">완료 체크 & 메모는 이 기기에만 저장돼요. 버튼을 누르면 원래 사이트로 이동해요 (로그인 필요).</p>
+  <h1>🐰 리틀헬로 레슨 모음 🌼</h1>
+  <p class="sub">완료 체크 & 메모는 이 기기에만 저장돼요 🍯 버튼을 누르면 원래 사이트로 이동해요 (로그인 필요)</p>
   <div id="list"></div>
 
 <script>
@@ -46,12 +62,12 @@ function render() {
       <div class="row1">
         <span class="num">${l.n}</span>
         <span class="title">${l.t}</span>
-        <a class="go" href="${l.url}" target="_blank">바로가기</a>
+        <a class="go" href="${l.url}" target="_blank">▶ 보러가기</a>
       </div>
       <div class="row1">
-        <label class="chk-label"><input type="checkbox" ${saved.done ? "checked" : ""}> 완료</label>
+        <label class="chk-label"><input type="checkbox" ${saved.done ? "checked" : ""}> 완료했어요 🎉</label>
       </div>
-      <textarea placeholder="메모 (아이 반응, 다음에 다시 볼 부분 등)">${saved.memo}</textarea>
+      <textarea placeholder="✏️ 메모 (아이 반응, 다음에 다시 볼 부분 등)">${saved.memo}</textarea>
     `;
     const checkbox = card.querySelector('input[type="checkbox"]');
     const textarea = card.querySelector('textarea');
