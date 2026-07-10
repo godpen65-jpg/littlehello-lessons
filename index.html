@@ -1,0 +1,69 @@
+<meta charset="UTF-8">
+<title>리틀헬로 레슨 모음</title>
+<style>
+  body { font-family: -apple-system, "Malgun Gothic", sans-serif; max-width: 640px; margin: 0 auto; padding: 20px 16px 60px; background: #fdf6ee; color: #333; }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  p.sub { color: #888; font-size: 14px; margin-top: 0; margin-bottom: 20px; }
+  .card { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); display: flex; flex-direction: column; gap: 8px; }
+  .card.done { opacity: 0.55; }
+  .row1 { display: flex; align-items: center; gap: 10px; }
+  .num { font-weight: bold; color: #e67e22; font-size: 13px; min-width: 34px; }
+  .title { flex: 1; font-size: 15px; font-weight: 600; }
+  .go { background: #e67e22; color: #fff; border: none; border-radius: 8px; padding: 6px 12px; font-size: 13px; text-decoration: none; white-space: nowrap; }
+  .done .go { background: #bbb; }
+  memo { display: block; }
+  textarea { width: 100%; box-sizing: border-box; border: 1px solid #eee; border-radius: 8px; padding: 6px 8px; font-size: 13px; font-family: inherit; resize: vertical; min-height: 32px; background: #fafafa; }
+  .chk-label { font-size: 13px; color: #666; display: flex; align-items: center; gap: 4px; }
+</style>
+<body>
+  <h1>리틀헬로 레슨 모음</h1>
+  <p class="sub">완료 체크 & 메모는 이 기기에만 저장돼요. 버튼을 누르면 원래 사이트로 이동해요 (로그인 필요).</p>
+  <div id="list"></div>
+
+<script>
+const lessons = [
+  {n:"L001", t:"이건 내 가족이에요! (My ___)", url:"https://thinkingbrainschool.com/littlehello/paid/lesson001"},
+  {n:"L002", t:"도와줄래?", url:"https://thinkingbrainschool.com/littlehello/paid/lesson002"},
+  {n:"L003", t:"한 입 더 먹고 싶을 땐? (more / all done)", url:"https://thinkingbrainschool.com/littlehello/paid/lesson003"},
+  {n:"L004", t:"내 거예요! (Mine / It's mine)", url:"https://thinkingbrainschool.com/littlehello/paid/lesson004"},
+  {n:"L005", t:"고마워, 주세요! (Thank you / Please)", url:"https://thinkingbrainschool.com/littlehello/paid/lesson005"},
+  {n:"L006", t:"이거 봐! (Look! / hi / bye-bye)", url:"https://thinkingbrainschool.com/littlehello/paid/lesson006"},
+  {n:"L007", t:"이거 줘! (I want this one)", url:"https://thinkingbrainschool.com/littlehello/paid/lesson007"},
+  {n:"L008", t:"이거 주세요 (Can I have it, please)", url:"https://thinkingbrainschool.com/littlehello/paid/lesson008"},
+  {n:"L009", t:"엄마, 어디 있지? (Where's the ___? It's here!)", url:"https://thinkingbrainschool.com/littlehello/paid/lesson009"},
+];
+
+const key = id => "littlehello_" + id;
+
+function render() {
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+  lessons.forEach(l => {
+    const saved = JSON.parse(localStorage.getItem(key(l.n)) || '{"done":false,"memo":""}');
+    const card = document.createElement("div");
+    card.className = "card" + (saved.done ? " done" : "");
+    card.innerHTML = `
+      <div class="row1">
+        <span class="num">${l.n}</span>
+        <span class="title">${l.t}</span>
+        <a class="go" href="${l.url}" target="_blank">바로가기</a>
+      </div>
+      <div class="row1">
+        <label class="chk-label"><input type="checkbox" ${saved.done ? "checked" : ""}> 완료</label>
+      </div>
+      <textarea placeholder="메모 (아이 반응, 다음에 다시 볼 부분 등)">${saved.memo}</textarea>
+    `;
+    const checkbox = card.querySelector('input[type="checkbox"]');
+    const textarea = card.querySelector('textarea');
+    const save = () => {
+      localStorage.setItem(key(l.n), JSON.stringify({done: checkbox.checked, memo: textarea.value}));
+      card.className = "card" + (checkbox.checked ? " done" : "");
+    };
+    checkbox.addEventListener("change", save);
+    textarea.addEventListener("input", save);
+    list.appendChild(card);
+  });
+}
+render();
+</script>
+</body>
